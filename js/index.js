@@ -12,7 +12,16 @@ window.onload = function() {
         for(var i=0; i<data.length; i++) {
             proj = data[i];
             listItem = document.createElement('li');
-            listItem.innerHTML = '<a href="'+proj.html_url+'" title="'+proj.description+'">'+proj.name+'</a>'
+            listItem.innerHTML = [
+                '<a href="',
+                proj.html_url,
+                '" title="',
+                proj.description,
+                '">',
+                proj.name,
+                '</a> - ',
+                (proj.description || '')
+            ].join('')
             container.appendChild(listItem);
         }
         projects.appendChild(container);
