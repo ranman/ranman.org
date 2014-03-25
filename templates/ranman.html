@@ -22,6 +22,7 @@
 		</article>
 		<article id="projects">
 			<h2>Projects</h2>
+			(sorted by update date)
 			<ul id="projects-list">
 			</ul>
 		</article>
@@ -35,13 +36,17 @@
 		<article id="speaking">
 			<h2>Speaking Engagements</h2>
 			<ul>
-				<li><a href="http://blueprint.hackmit.org">Blueprint MIT</a> - Boston, MA - 02/21/2014</li>
+			{% for event in upcoming %}
+				<li>{% if event.href %}<a href="{{event.href}}">{% endif %}{{event.name}}{% if event.href %}</a>{% endif %} - {{event.loc.name}}, {{event.date.strftime('%Y-%m-%d')}}
+				</li>
+			{% endfor %}
 			</ul>
 			<h3>Past</h3>
 			<ul>
-				<li><a href="">hackTECH</a> - Los Angeles, CA - 01/24/2014</li>
-				<li><a href="">MHacks</a> - Detroit, MI - 01/17/2014</li>
-				<li><a href="">Triangle MUG</a> - Raleigh, NC - 01/15/2014</li>
+			{% for event in past %}
+				<li>{% if event.href %}<a href="{{event.href}}">{% endif %}{{event.name}}{% if event.href %}</a>{% endif %} - {{event.loc.name}}, {{event.date.strftime('%Y-%m-%d')}}
+				</li>
+			{% endfor %}
 			</ul>
 		</article>
 	</section>
