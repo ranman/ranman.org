@@ -12,6 +12,7 @@ window.onload = function() {
 		for(var i=0; i<data.length; i++) {
 			proj = data[i];
 			listItem = document.createElement('li');
+			listItem.className = "project";
 			listItem.innerHTML = [
 				'<a href="',
 				proj.html_url,
@@ -22,12 +23,27 @@ window.onload = function() {
 				'</a> - ',
 				(proj.description || '')
 			].join('');
-			if (i > 9) {
-				listItem.style.display = "none";
-			}
+			listItem.dataset.index = proj.name.toLowerCase().replace(' ', '').replace('-', '').replace(',', '').replace('!', '')
 			container.appendChild(listItem);
 		}
 		projects.appendChild(container);
 	}, false);
 	xhr.send();
+	createSearcher(
+		document.getElementById('projects-search'),
+		document.getElementById('projects-search-style'),
+		".project");
+	createSearcher(
+		document.getElementById('speaking-search'),
+		document.getElementById('speaking-search-style'),
+		".speaking");
+}
+function createSearcher(elem, style, selector) {
+	elem.addEventListener('input', function() {
+		if (!this.value) {
+			style.innerHTML = "";
+			return;
+		}
+		style.innerHTML = selector+":not([data-index*=\"" + this.value.toLowerCase() + "\"]) { display: none; }";
+	})
 }

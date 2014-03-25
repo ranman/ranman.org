@@ -2,7 +2,8 @@ from flask import Flask, render_template
 from flask.ext.pymongo import PyMongo
 from datetime import datetime
 
-app = Flask("randall")
+app = Flask(__name__)
+app.config.update({'MONGO_DBNAME': 'randall'})
 app.debug = True
 mongo = PyMongo(app)
 

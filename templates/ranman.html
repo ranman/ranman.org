@@ -21,7 +21,8 @@
 			</ul>
 		</article>
 		<article id="projects">
-			<h2>Projects</h2>
+			<h2>Projects <input type="text" placeholder="search" id="projects-search"></h2>
+			<style id="projects-search-style"></style>
 			(sorted by update date)
 			<ul id="projects-list">
 			</ul>
@@ -34,17 +35,18 @@
 			</ul>
 		</article>
 		<article id="speaking">
-			<h2>Speaking Engagements</h2>
+			<h2>Speaking Engagements <input type="text" placeholder="search" id="speaking-search"></h2>
+			<style id="speaking-search-style"></style>
 			<ul>
 			{% for event in upcoming %}
-				<li>{% if event.href %}<a href="{{event.href}}">{% endif %}{{event.name}}{% if event.href %}</a>{% endif %} - {{event.loc.name}}, {{event.date.strftime('%Y-%m-%d')}}
+				<li class="speaking" data-index="{{event.loc.name|lower|replace(',', '')|replace(' ', '')}}{{event.name|lower|replace(' ', '')}}{{event.date.strftime('%A%B')|lower}}">{% if event.href %}<a href="{{event.href}}">{% endif %}{{event.name}}{% if event.href %}</a>{% endif %} - {{event.loc.name}}, {{event.date.strftime('%Y-%m-%d')}}
 				</li>
 			{% endfor %}
 			</ul>
 			<h3>Past</h3>
 			<ul>
 			{% for event in past %}
-				<li>{% if event.href %}<a href="{{event.href}}">{% endif %}{{event.name}}{% if event.href %}</a>{% endif %} - {{event.loc.name}}, {{event.date.strftime('%Y-%m-%d')}}
+				<li class="speaking" data-index="{{event.loc.name|lower|replace(',', '')|replace(' ', '')}}{{event.name|lower|replace(' ', '')}}{{event.date.strftime('%A%B')|lower}}">{% if event.href %}<a href="{{event.href}}">{% endif %}{{event.name}}{% if event.href %}</a>{% endif %} - {{event.loc.name}}, {{event.date.strftime('%Y-%m-%d')}}
 				</li>
 			{% endfor %}
 			</ul>
