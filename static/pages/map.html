@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+     google.load('visualization', '1', {'packages': ['geochart']});
+     google.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+          ['Region', 'Good'],
+          ['Alabama', 0],
+          ['Alaska', 10],
+          ['Arizona', 10],
+          ['Arkansas', 0],
+          ['California', 10],
+          ['Colorado', 0],
+          ['Connecticut', 10],
+          ['District Of Columbia', 10],
+          ['Delaware', 10],
+          ['Florida', 10],
+          ['Georgia', 10],
+          ['Hawaii', 0],
+          ['Idaho', 0],
+          ['Illinois', 0],
+          ['Indiana', 10],
+          ['Iowa', 0],
+          ['Kansas', 10],
+          ['Kentucky', 10],
+          ['Louisiana', 0],
+          ['Maine', 0],
+          ['Maryland', 10],
+          ['Massachusetts', 10],
+          ['Michigan', 5],
+          ['Minnesota', 0],
+          ['Mississippi', 0],
+          ['Missouri', 0],
+          ['Montana', 10],
+          ['Nebraska', 10],
+          ['Nevada', 10],
+          ['New Hampshire', 10],
+          ['New Jersey', 10],
+          ['New Mexico', 0],
+          ['New York', 10],
+          ['North Carolina', 10],
+          ['North Dakota', 10],
+          ['Ohio', 10],
+          ['Oklahoma', 0],
+          ['Oregon', 10],
+          ['Pennsylvania', 10],
+          ['Rhode Island', 0],
+          ['South Carolina', 0],
+          ['South Dakota', 0],
+          ['Tennessee', 10],
+          ['Texas', 10],
+          ['Utah', 0],
+          ['Vermont', 10],
+          ['Virginia', 10],
+          ['Washington', 10],
+          ['West Virginia', 10],
+          ['Wisconsin', 10],
+          ['Wyoming', 10]
+        ]);
+
+        var options = {
+          region: 'US',
+          drawMode: 'region',
+          legend: 'none',
+          resolution: 'provinces',
+          colors: ['red', 'yellow', 'green'],
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    };
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
