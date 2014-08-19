@@ -11,6 +11,7 @@ mongo = PyMongo(app)
 @app.route('/')
 def home_page():
     events = list(mongo.db.events.find().sort("date", -1))
+    index = 0
     for index in range(len(events)):
         if events[index].get('date').replace(tzinfo=None) <= datetime.now():
             break

@@ -5,7 +5,11 @@ window.onload = function() {
 	xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
 	xhr.responseType = 'json';
 	xhr.addEventListener('load', function(e) {
-		var data = xhr.response.items;
+		if (xhr.response.items == null) {
+			var data = JSON.parse(xhr.responseText).items;
+		} else {
+			var data = xhr.response.items
+		}
 		var container = document.createDocumentFragment();
 		var listItem;
 		var proj;
