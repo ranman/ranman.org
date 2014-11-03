@@ -13,12 +13,11 @@ app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET")
 app.config.update({
     'MONGO_DBNAME': 'randall',
-    'MONGO_HOST': os.getenv("MONGO_HOST"),
+    'MONGO_HOST': os.getenv("MONGO_HOST", "localhost"),
     'MONGO_READ_PREFERENCE': ReadPreference.SECONDARY_PREFERRED,
     'MONGO_REPLICA_SET': 'ranman',
 })
 mongo = PyMongo(app)
-db = mongo.db
 FACEBOOK_APP_ID = os.getenv('FACEBOOK_APP_ID', '776036972455787')
 FACEBOOK_APP_SECRET = os.getenv('FACEBOOK_APP_SECRET')
 oauth = OAuth()
@@ -81,7 +80,7 @@ def oauth_authorized(resp):
 
 @app.route('/')
 def home_page():
-    events = list(db.events.find().sort("date", -1))
+    events = list(mongo.db.events.find().sort("date", -1))
     index = 0
     for index in range(len(events)):
         if events[index].get('date').replace(tzinfo=None) <= datetime.now():
