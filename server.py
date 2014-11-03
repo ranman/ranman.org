@@ -6,13 +6,20 @@ import requests
 import facebook
 from boto.sts import STSConnection
 from flask.ext.pymongo import PyMongo
+from pymongo.read_preferences import ReadPreference
 from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET")
-app.config.update({'MONGO_DBNAME': 'randall'})
+app.config.update({
+    'MONGO_DBNAME': 'randall',
+    'MONGO_HOST': os.getenv("MONGO_HOST"),
+    'MONGO_READ_PREFERENCE': ReadPreference.SECONDARY_PREFERRED,
+    'MONGO_REPLICA_SET': 'ranman',
+})
 mongo = PyMongo(app)
-FACEBOOK_APP_ID = '776036972455787'
+db = mongo.db
+FACEBOOK_APP_ID = os.getenv('FACEBOOK_APP_ID', '776036972455787')
 FACEBOOK_APP_SECRET = os.getenv('FACEBOOK_APP_SECRET')
 oauth = OAuth()
 facebook_oauth = oauth.remote_app(
@@ -25,6 +32,8 @@ facebook_oauth = oauth.remote_app(
     consumer_secret=FACEBOOK_APP_SECRET,
     request_token_params={'scope': ['email', 'user_groups']}
 )
+application = app  # do this to make beanstalk happy
+application.debug = os.getenv("FLASK_DEBUG", False)
 
 
 @app.route('/login')
@@ -72,7 +81,7 @@ def oauth_authorized(resp):
 
 @app.route('/')
 def home_page():
-    events = list(mongo.db.events.find().sort("date", -1))
+    events = list(db.events.find().sort("date", -1))
     index = 0
     for index in range(len(events)):
         if events[index].get('date').replace(tzinfo=None) <= datetime.now():
